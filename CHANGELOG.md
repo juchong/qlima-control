@@ -1,9 +1,5 @@
 # Changelog
 
-## Unreleased
-- Firmware: expose the raw Midea appliance-error flag (C0 status byte 1 bit 7) as a diagnostic problem binary sensor, independently of the numeric fault code in byte 16. This preserves status conditions that assert the flag without a conventional code.
-- CI: compile the external component for an ESP8266 `esp12e` target so C3-only assumptions cannot enter the shared Midea component unnoticed.
-
 ## 1.10.2 (firmware 1.4.5)
 - **More transmit power once connected.** ESP32-C3 SuperMini boards join WiFi at 8.5 dB (`output_power`), where the access point hears them weakly and may drop them (e.g. with a minimum-RSSI setting). After joining, the ESP now raises its power to the ceiling ESPHome builds the image with (output power rounded up, at least 10 dB – so 10 dB on these boards) and returns to the start power to reconnect after a drop. It never goes above that ceiling: raising the ceiling itself made a board brown out at start-up. Boards configured with a higher `output_power` are never lowered.
 - New diagnostic sensor *WiFi-sendestyrke* (dB in use).

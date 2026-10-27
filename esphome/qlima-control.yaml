@@ -19,7 +19,7 @@
 #
 # Midea-komponenten er Qlima Controls udvidede udgave (components/midea): den taber
 # ikke kommandoer der kommer tæt efter hinanden, sender ECO også i varme, læser
-# anlæggets rå fejlflag, fejlkode og filteralarm og spørger ikke efter effekt, som Qlima aldrig
+# anlæggets fejlkode og filteralarm og spørger ikke efter effekt, som Qlima aldrig
 # svarer på. Andre Midea-anlæg kan også give servicedata – se qlima-control-servicedata.yaml.
 
 # Firmwarens version står kun her. Home Assistant viser den på enheden, og Qlima
@@ -155,8 +155,6 @@ climate:
       name: Fugtighed setpunkt
     error_code:
       name: Fejlkode
-    appliance_error:
-      name: Anlægsfejl
     filter_alert:
       name: Filteralarm
     # Anlægget glemmer Follow Me ved ny tilstand/temperatur – send igen kort efter

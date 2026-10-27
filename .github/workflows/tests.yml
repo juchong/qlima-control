@@ -10,13 +10,17 @@ permissions:
 
 jobs:
   esphome-esp8266:
+    name: Latest ESPHome / ESP8266 esp12e
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
-      - run: pip install "esphome==2026.9.1"
+      - name: Install ESPHome
+        run: |
+          pip install esphome
+          esphome version
       - run: esphome config tests/midea-esp8266.yaml
       - run: esphome compile tests/midea-esp8266.yaml
 
