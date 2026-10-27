@@ -45,6 +45,7 @@ class AirConditioner final : public ApplianceBase<dudanov::midea::ac::AirConditi
   void set_outdoor_fan_speed_sensor(Sensor *s) { this->outdoor_fan_sensor_ = s; }
   void set_outdoor_unit_power_sensor(Sensor *s) { this->outdoor_power_sensor_ = s; }
   void set_defrost_sensor(binary_sensor::BinarySensor *s) { this->defrost_sensor_ = s; }
+  void set_appliance_error_sensor(binary_sensor::BinarySensor *s) { this->appliance_error_sensor_ = s; }
   void set_error_code_sensor(Sensor *s) { this->error_code_sensor_ = s; }
   void set_filter_alert_sensor(binary_sensor::BinarySensor *s) { this->filter_alert_sensor_ = s; }
   void set_telemetry_groups_sensor(text_sensor::TextSensor *s) { this->telemetry_groups_sensor_ = s; }
@@ -105,6 +106,7 @@ class AirConditioner final : public ApplianceBase<dudanov::midea::ac::AirConditi
   Sensor *outdoor_fan_sensor_{nullptr};
   Sensor *outdoor_power_sensor_{nullptr};
   binary_sensor::BinarySensor *defrost_sensor_{nullptr};
+  binary_sensor::BinarySensor *appliance_error_sensor_{nullptr};
   Sensor *error_code_sensor_{nullptr};
   binary_sensor::BinarySensor *filter_alert_sensor_{nullptr};
   text_sensor::TextSensor *telemetry_groups_sensor_{nullptr};
