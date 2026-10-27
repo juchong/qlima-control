@@ -23,7 +23,7 @@ En ESP32-C3 til ca. 30 kr. erstatter WiFi-sticken i anlæggets USB-port, og inte
 - **Follow Me** via en IR-diode: anlægget regulerer efter *din* rumføler i stedet for sin egen føler oppe under loftet.
 - Auto-vip, lamel ét trin og display til/fra via IR – præcis som fjernbetjeningen.
 - Udetemperatur fra udedelen, anlæggets egen føler, filtertimer og "anlæg svarer".
-- Anlæggets **fejlkode** og **filteralarm**.
+- Anlæggets rå **fejlflag**, **fejlkode** og **filteralarm**.
 - Kommandoer der kommer tæt efter hinanden, går ikke tabt.
 - Valgfri pakke til andre Midea-anlæg: anlæggets **servicedata** (kompressorens frekvens, spoler, afrimning, blæsere, udedelens effekt). Qlima S 5225/5232 svarer ikke på den.
 - **Lokalt web-UI** på `http://<ip>` til styring og status – virker også uden Home Assistant.
@@ -204,6 +204,7 @@ Vælger du **vægtet**, får du et trin hvor hver føler får en procent. En fø
 - Anlæggene tager kun **hele grader** (også Follow Me) – halve grader i termostaten opnås ved at styre Follow Me ud fra rumføleren.
 - Swing/vip styres via IR, så Home Assistant kan ikke se om anlægget vipper.
 - Qlima S 5225/5232 svarer kun med Mideas korte status – ingen kompressorfrekvens, spoletemperaturer eller effekt fra anlægget selv (testet med tre rammeformater). Brug en effektmåler. Andre Midea-anlæg kan give servicedata via `qlima-control-servicedata.yaml`.
+- Fejlflaget og den numeriske fejlkode vises hver for sig. Et aktivt fejlflag med kode 0 er en gyldig status og må ikke kasseres; den præcise betydning er modelafhængig.
 
 ---
 
@@ -242,7 +243,7 @@ Hold **On/Off + Fan** inde i 8 sekunder: displayet viser koder med anlæggets eg
 
 ## English
 
-Qlima Control gives you **local control of Qlima/Midea split heat pumps** (Qlima S/SC 5225 and 5232 tested) from Home Assistant. An ESP32-C3 replaces the unit's WiFi stick in its USB port (Midea UART at 9600 baud, 5 V open-drain with a 4.7 kΩ pull-up), and an IR LED next to the unit's receiver handles Follow Me, swing and display. Flash it from the [web installer](https://mrdonnii.github.io/qlima-control/), add it in ESPHome, then add the **Qlima Control** integration (HACS custom repository) and link room temperature sensors (mean, weighted %, min or max), humidity, a power meter, electricity price, doors and windows and a notify service. The unit holds the room target itself on Follow Me (or a room thermostat with hysteresis takes over), with door/window staging, Follow Me, COP and heat price, filter reminders, release/status/countdowns and all unit functions as buttons. Price steering moves the target a degree up in cheap and down in expensive periods (Strømligning, Nord Pool, Energi Data Service and other forecasts), an optional wake-up power-cycles the unit when it idles in its low-effort hold while the room is too cold (Midea units only work hard again after a power cycle), and Turbo runs the unit's boost for 30 minutes. The firmware reads the unit's fault code and filter alarm, no longer drops commands sent close together (an optional package reads service data from Midea units that answer it), has a local web UI and updates itself from this repository's releases.
+Qlima Control gives you **local control of Qlima/Midea split heat pumps** (Qlima S/SC 5225 and 5232 tested) from Home Assistant. An ESP32-C3 replaces the unit's WiFi stick in its USB port (Midea UART at 9600 baud, 5 V open-drain with a 4.7 kΩ pull-up), and an IR LED next to the unit's receiver handles Follow Me, swing and display. Flash it from the [web installer](https://mrdonnii.github.io/qlima-control/), add it in ESPHome, then add the **Qlima Control** integration (HACS custom repository) and link room temperature sensors (mean, weighted %, min or max), humidity, a power meter, electricity price, doors and windows and a notify service. The unit holds the room target itself on Follow Me (or a room thermostat with hysteresis takes over), with door/window staging, Follow Me, COP and heat price, filter reminders, release/status/countdowns and all unit functions as buttons. Price steering moves the target a degree up in cheap and down in expensive periods (Strømligning, Nord Pool, Energi Data Service and other forecasts), an optional wake-up power-cycles the unit when it idles in its low-effort hold while the room is too cold (Midea units only work hard again after a power cycle), and Turbo runs the unit's boost for 30 minutes. The firmware reads the unit's raw appliance-error flag, fault code and filter alarm, no longer drops commands sent close together (an optional package reads service data from Midea units that answer it), has a local web UI and updates itself from this repository's releases.
 
 ---
 

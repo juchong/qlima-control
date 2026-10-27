@@ -89,6 +89,7 @@ void AirConditioner::on_status_change() {
   set_sensor(this->outdoor_sensor_, this->base_.getOutdoorTemp());
   set_sensor(this->power_sensor_, this->base_.getPowerUsage());
   set_sensor(this->humidity_sensor_, this->base_.getIndoorHum());
+  set_binary(this->appliance_error_sensor_, this->base_.getApplianceError());
   set_sensor(this->error_code_sensor_, this->base_.getErrorCode());
   set_binary(this->filter_alert_sensor_, this->base_.getFilterAlert());
 }
