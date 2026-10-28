@@ -39,7 +39,7 @@ jobs:
           echo "Firmware $VERSION"
       - name: Build firmware
         run: |
-          pip install "esphome==2026.9.1"
+          pip install "esphome==2026.10.1"
           python3 tests/check_ota_packages.py
           esphome config esphome/qlima-control-esp32c3.yaml
           esphome compile esphome/qlima-control-factory.yaml

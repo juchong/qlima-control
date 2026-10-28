@@ -33,6 +33,25 @@ climate:
     num_attempts: 2
     beeper: false
     autoconf: true
+    telemetry_interval: 10s
+    compressor_frequency:
+      name: Compressor Frequency
+    compressor_target_frequency:
+      name: Compressor Target Frequency
+    indoor_coil_temperature:
+      name: Indoor Coil Temperature
+    outdoor_coil_temperature:
+      name: Outdoor Coil Temperature
+    discharge_temperature:
+      name: Discharge Temperature
+    indoor_fan_speed:
+      name: Indoor Fan Speed
+    outdoor_fan_speed:
+      name: Outdoor Fan Speed
+    outdoor_unit_power:
+      name: Outdoor Unit Power
+    telemetry_groups:
+      name: Requested Telemetry Groups
     appliance_error:
       name: Appliance Error
     error_code:

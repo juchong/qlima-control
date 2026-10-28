@@ -25,7 +25,7 @@ En ESP32-C3 til ca. 30 kr. erstatter WiFi-sticken i anlæggets USB-port, og inte
 - Udetemperatur fra udedelen, anlæggets egen føler, filtertimer og "anlæg svarer".
 - Anlæggets **fejlkode** og **filteralarm**.
 - Kommandoer der kommer tæt efter hinanden, går ikke tabt.
-- Valgfri pakke til andre Midea-anlæg: anlæggets **servicedata** (kompressorens frekvens, spoler, afrimning, blæsere, udedelens effekt). Qlima S 5225/5232 svarer ikke på den.
+- Valgfri pakke til andre Midea-anlæg: anlæggets **servicedata** (kompressorens frekvens, spoler, blæsere, udedelens effekt). Qlima S 5225/5232 svarer ikke på den.
 - **Lokalt web-UI** på `http://<ip>` til styring og status – virker også uden Home Assistant.
 - WiFi-opsætning uden kode: ESP'en laver sit eget netværk første gang.
 - **Opdaterer sig selv**: nye firmware-udgivelser her i repoet dukker op som en opdatering i Home Assistant.

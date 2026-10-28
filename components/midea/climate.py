@@ -1,7 +1,6 @@
-# Qlima Control: copy of ESPHome 2026.9.1's `midea` component, extended with the unit's
-# engineering telemetry (compressor, coils, defrost, fans, outdoor power), its appliance-error
-# flag, fault code and filter reminder. Uses the Qlima Control MideaUART fork, which also stops
-# dropping commands sent close together and allows ECO in heat/auto. See README.
+# Qlima Control: ESPHome `midea` component extended with evidence-backed engineering telemetry,
+# the appliance-error flag, fault code and filter reminder. Protocol decoding lives in the
+# pinned MideaUART fork so both ESPHome adapters use the same implementation. See README.
 
 from esphome import automation
 import esphome.codegen as cg
@@ -65,7 +64,6 @@ CONF_DISCHARGE_TEMPERATURE = "discharge_temperature"
 CONF_INDOOR_FAN_SPEED = "indoor_fan_speed"
 CONF_OUTDOOR_FAN_SPEED = "outdoor_fan_speed"
 CONF_OUTDOOR_UNIT_POWER = "outdoor_unit_power"
-CONF_DEFROST = "defrost"
 CONF_APPLIANCE_ERROR = "appliance_error"
 CONF_ERROR_CODE = "error_code"
 CONF_FILTER_ALERT = "filter_alert"
@@ -242,9 +240,6 @@ CONFIG_SCHEMA = cv.All(
                 accuracy_decimals=0,
                 device_class=DEVICE_CLASS_POWER,
                 state_class=STATE_CLASS_MEASUREMENT,
-            ),
-            cv.Optional(CONF_DEFROST): binary_sensor.binary_sensor_schema(
-                icon="mdi:snowflake-melt",
             ),
             cv.Optional(CONF_APPLIANCE_ERROR): binary_sensor.binary_sensor_schema(
                 icon="mdi:alert-circle-outline",
@@ -439,7 +434,6 @@ async def to_code(config):
             sens = await sensor.new_sensor(config[key])
             cg.add(setter(sens))
     for key, setter in (
-        (CONF_DEFROST, var.set_defrost_sensor),
         (CONF_APPLIANCE_ERROR, var.set_appliance_error_sensor),
         (CONF_FILTER_ALERT, var.set_filter_alert_sensor),
     ):
@@ -454,10 +448,10 @@ async def to_code(config):
     # library talks to esp_wifi directly, so no library entry is needed.
     if CORE.is_esp32 and CORE.using_arduino:
         cg.add_library("WiFi", None)
-    # Qlima Control fork of MideaUART (upstream eeea6c3 + patches, see its PATCHES.md).
-    # Pinned to juchong's diagnostic branch commit so ESP8266 builds are reproducible.
+    # Pinned to an exact reviewed commit so ESP8266 builds are reproducible and both
+    # ESPHome adapters share the same protocol decoder.
     cg.add_library(
         name="MideaUART",
         version=None,
-        repository="https://github.com/juchong/MideaUART.git#a8b7b9cf8b7048da510d70f2f833ffb91cf4726b",
+        repository="https://github.com/juchong/MideaUART.git#7f5a6766e778a56fb676379a47d5f19242ebfb0a",
     )

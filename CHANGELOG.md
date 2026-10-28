@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+- Corrected Midea service-data decoding: outdoor fan speed comes from Group 3; Group 5 is no longer mislabeled as outdoor fan/defrost data. Removed the unsupported defrost entity.
+- Removed invented 30-second startup/pending delays, zero-value inference and permanent retirement after three failed group queries. Valid zero readings are published and later polls remain retryable.
+- Both adapters now use the same pinned MideaUART decoder, and CI compiles the full ESP8266 telemetry schema against the latest ESPHome release in addition to the ESP32-C3 firmware build.
+
 ## 1.10.2 (firmware 1.4.5)
 - **More transmit power once connected.** ESP32-C3 SuperMini boards join WiFi at 8.5 dB (`output_power`), where the access point hears them weakly and may drop them (e.g. with a minimum-RSSI setting). After joining, the ESP now raises its power to the ceiling ESPHome builds the image with (output power rounded up, at least 10 dB – so 10 dB on these boards) and returns to the start power to reconnect after a drop. It never goes above that ceiling: raising the ceiling itself made a board brown out at start-up. Boards configured with a higher `output_power` are never lowered.
 - New diagnostic sensor *WiFi-sendestyrke* (dB in use).

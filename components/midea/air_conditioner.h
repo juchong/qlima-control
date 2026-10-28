@@ -44,7 +44,6 @@ class AirConditioner final : public ApplianceBase<dudanov::midea::ac::AirConditi
   void set_indoor_fan_speed_sensor(Sensor *s) { this->indoor_fan_sensor_ = s; }
   void set_outdoor_fan_speed_sensor(Sensor *s) { this->outdoor_fan_sensor_ = s; }
   void set_outdoor_unit_power_sensor(Sensor *s) { this->outdoor_power_sensor_ = s; }
-  void set_defrost_sensor(binary_sensor::BinarySensor *s) { this->defrost_sensor_ = s; }
   void set_appliance_error_sensor(binary_sensor::BinarySensor *s) { this->appliance_error_sensor_ = s; }
   void set_error_code_sensor(Sensor *s) { this->error_code_sensor_ = s; }
   void set_filter_alert_sensor(binary_sensor::BinarySensor *s) { this->filter_alert_sensor_ = s; }
@@ -80,22 +79,12 @@ class AirConditioner final : public ApplianceBase<dudanov::midea::ac::AirConditi
   Sensor *power_sensor_{nullptr};
 
   // Telemetry
-  static constexpr uint8_t NUM_GROUPS = 8;
-  static constexpr int8_t GROUP_DEAD = 127;
   void query_next_group_();
-  void on_group_data_(uint8_t group, const uint8_t *d, uint8_t n);
-  void on_group_error_(uint8_t group);
-  void clear_group_(uint8_t group);
-  bool wants_group_(uint8_t group) const;
+  void on_group_data_(const dudanov::midea::ac::GroupData &data);
+  bool wants_group_(dudanov::midea::ac::GroupId group) const;
   void publish_groups_();
   uint32_t telemetry_interval_{10000};
   uint8_t next_group_{0};
-  bool group_pending_{false};
-  uint32_t group_pending_since_{0};
-  bool group_ok_[NUM_GROUPS]{};     // answered at least once
-  bool group_real_[NUM_GROUPS]{};   // answered with non-zero data (some models zero-fill groups)
-  int8_t group_fails_[NUM_GROUPS]{};
-  uint8_t last_hz_{0};
   Sensor *compressor_frequency_sensor_{nullptr};
   Sensor *compressor_target_frequency_sensor_{nullptr};
   Sensor *compressor_current_sensor_{nullptr};
@@ -105,7 +94,6 @@ class AirConditioner final : public ApplianceBase<dudanov::midea::ac::AirConditi
   Sensor *indoor_fan_sensor_{nullptr};
   Sensor *outdoor_fan_sensor_{nullptr};
   Sensor *outdoor_power_sensor_{nullptr};
-  binary_sensor::BinarySensor *defrost_sensor_{nullptr};
   binary_sensor::BinarySensor *appliance_error_sensor_{nullptr};
   Sensor *error_code_sensor_{nullptr};
   binary_sensor::BinarySensor *filter_alert_sensor_{nullptr};
