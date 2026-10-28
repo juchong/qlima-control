@@ -33,7 +33,7 @@ esphome:
     - <esp_wifi.h>   # sendestyrken hæves efter tilslutning (se wifi:)
 
 external_components:
-  - source: github://MRDonnii/qlima-control@main
+  - source: github://juchong/qlima-control@main
     components: [midea]
     refresh: 1h
 

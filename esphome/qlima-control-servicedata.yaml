@@ -9,7 +9,7 @@
 #
 #   packages:
 #     qlima:
-#       url: https://github.com/MRDonnii/qlima-control
+#       url: https://github.com/juchong/qlima-control
 #       ref: main
 #       files: [esphome/qlima-control.yaml, esphome/qlima-control-servicedata.yaml]
 #       refresh: 1h
