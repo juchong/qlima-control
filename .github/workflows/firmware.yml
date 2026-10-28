@@ -1,10 +1,8 @@
-name: Firmware
+name: Firmware build
 
-# Builds the ESP32-C3 image and publishes the web installer + OTA manifest on
-# GitHub Pages – only when the firmware or the installer page changes. The
-# firmware version is the `project: version:` in esphome/qlima-control.yaml.
-# ESPs running the image see a new version as an update in Home Assistant and
-# install it themselves when "Opdatér automatisk" is on.
+# Builds the ESP32-C3 reference image and archives the resulting installer site.
+# This fork uses the workflow as a compile check; it does not publish upstream's
+# GitHub Pages distribution site.
 
 on:
   pull_request:
@@ -16,12 +14,6 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: false
 
 jobs:
   build:
@@ -75,17 +67,8 @@ jobs:
           }
           json.dump(manifest, open("_site/firmware/qlima-control-esp32c3.manifest.json", "w"), indent=2)
           PY
-      - uses: actions/upload-pages-artifact@v4
+      - name: Archive firmware site
+        uses: actions/upload-artifact@v4
         with:
+          name: qlima-control-firmware-site
           path: _site
-
-  deploy:
-    if: github.event_name != 'pull_request'
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
